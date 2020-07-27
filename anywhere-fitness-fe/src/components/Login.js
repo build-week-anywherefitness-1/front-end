@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import * as Yup from 'yup';
 import axios from 'axios';
+import styled from 'styled-components'
 
 function Form(props){
     const defaultState = {
@@ -39,7 +40,7 @@ function Form(props){
         e.preventDefault();
 
         axios
-        .post('https://reqres.in/api/users', formState)
+        .post('https://app-anywherefitness.herokuapp.com/api/auth/login', formState)
         .then((res)=>{ 
         console.log('Form submitted successfully!',res.data)
         props.setUser([...props.user,res.data])
@@ -74,7 +75,7 @@ function Form(props){
     return(
         <form onSubmit={formSubmit}>
         <label htmlFor='emailInput'>Email
-            <input
+            <EmailInput
             type='email'
             placeholder='Email'
             email='email'
@@ -86,7 +87,7 @@ function Form(props){
             </label>
             <div>{errors.email}</div>
             <label htmlFor='passwordInput'>Password
-            <input
+            <PasswordInput
             type='password'
             placeholder='Password'
             name='password'
@@ -97,18 +98,62 @@ function Form(props){
             />
             </label>
             <label>Role
-            <select id ='roleInput' name='role' onChange={inputChange}>
+            <RoleSelect id ='roleInput' name='role' onChange={inputChange}>
                 <option>Select</option>
                 <option value='Instuctor'>Instructor</option>
                 <option value='Customer'>Customer</option>
-            </select>
+            </RoleSelect>
             </label>
 
-            <button type='login' disabled={buttonDisabled}>Log in</button>
+            <Button type='login' disabled={buttonDisabled}>Log in</Button>
         </form>
     )
 }
-
+const RoleSelect = styled.select`
+`
+const PasswordInput = styled.input`
+`
+const EmailInput = styled.input`
+`
+const UserNameInput = styled.input`
+`
+const Button = styled.button`
+width: 140px;
+height: 45px;
+font-family: 'Roboto', sans-serif;
+font-size: 11px;
+text-transform: uppercase;
+letter-spacing: 2.5px;
+font-weight: 500;
+color: #000;
+background-color: #fff;
+border: none;
+border-radius: 45px;
+box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+transition: all 0.3s ease 0s;
+cursor: pointer;
+outline: none;
+display:flex;
+align-items:center;
+justify-content: center;
+margin: 10px;
+&:hover {
+background-color: #2EE59D;
+box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+color: #fff;
+transform: translateY(-7px);
+}
+}
+`
+const Form = styled.form`
+display:flex;
+flex-direction: column;
+justify-content: center;
+align-items:center;
+margin: 10px;
+`
+const NameInput = styled.input`
+`
 export default Login;
 
 
