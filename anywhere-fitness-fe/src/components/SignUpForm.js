@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
 import axios from 'axios'
 import * as yup from 'yup'
+import {
+    Input,
+    Select,
+    Button,
+    Form
+} from './formStyles'
 
 const formSchema = yup.object().shape({
     name: yup.string()
@@ -75,6 +80,7 @@ const SignUpForm = () => {
         axios.post('https://reqres.in/api/users', formState)
         .then( res => {
             setApplication([...application, res.data])
+
             window.location.href = '/Instructor'
             
         }
@@ -85,20 +91,21 @@ const SignUpForm = () => {
             <Form onSubmit={formSubmit}>
 
             <label htmlFor="roll">
-                <RollSelect>
+                <Select
                 name="roll"
                 id="roll"
                 placeholder="Enter Password"
                 value={formState.password}
                 onChange={inputChange}
+                >
                         <option value="Select a Role">Select a Role</option>
                         <option value="Instructor">Instructor</option>
                         <option value="Client">Client</option>
-                </RollSelect>
+                </Select>
                 </label>
 
                 <label htmlFor="name">
-                <NameInput
+                <Input
                 type="text"
                 name="name"
                 id="name"
@@ -110,7 +117,7 @@ const SignUpForm = () => {
                 </label>
 
                 <label htmlFor="username">
-                <UserNameInput
+                <Input
                 type="text"
                 name="username"
                 id="username"
@@ -122,7 +129,7 @@ const SignUpForm = () => {
                 </label>
 
                 <label htmlFor="email">
-                <EmailInput
+                <Input
                 type="text"
                 name="email"
                 id="email"
@@ -134,7 +141,7 @@ const SignUpForm = () => {
                 </label>
 
                 <label htmlFor="password">
-                <PasswordInput
+                <Input
                 type="text"
                 name="password"
                 id="password"
@@ -150,56 +157,5 @@ const SignUpForm = () => {
         </div>
     )
 }
-const RollSelect = styled.select`
 
-`
-const PasswordInput = styled.input`
-
-`
-const EmailInput = styled.input`
-
-`
-const UserNameInput = styled.input`
-
-`
-const Button = styled.button`
-width: 140px;
-height: 45px;
-font-family: 'Roboto', sans-serif;
-font-size: 11px;
-text-transform: uppercase;
-letter-spacing: 2.5px;
-font-weight: 500;
-color: #000;
-background-color: #fff;
-border: none;
-border-radius: 45px;
-box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-transition: all 0.3s ease 0s;
-cursor: pointer;
-outline: none;
-display:flex;
-align-items:center;
-justify-content: center;
-margin: 10px;
-
-&:hover {
-
-background-color: #2EE59D;
-box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
-color: #fff;
-transform: translateY(-7px);
-}
-}
-`
-const Form = styled.form`
-display:flex;
-flex-direction: column;
-justify-content: center;
-align-items:center;
-margin: 10px;
-`
-const NameInput = styled.input`
-
-`
 export default SignUpForm;
