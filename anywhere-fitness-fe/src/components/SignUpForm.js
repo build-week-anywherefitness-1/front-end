@@ -8,6 +8,7 @@ import {
     Form,
     Error,
     SelectContainer,
+    FormAlign,
 } from './formStyles'
 
 const formSchema = yup.object().shape({
@@ -34,7 +35,7 @@ const SignUpForm = () => {
         username: "",
         email: "",
         password: "",
-        roll: "please choose a roll"
+        roll: "Instructor"
        
     })
     const [errorState, setErrorState] = useState({
@@ -42,7 +43,7 @@ const SignUpForm = () => {
         username: "*",
         email: "*",
         password: "*",
-        roll: "*"
+        roll: ""
        
     })
 
@@ -82,7 +83,7 @@ const SignUpForm = () => {
         
         axios.post('https://reqres.in/api/users', formState)
         .then( res => {
-            
+            console.log(res.data)
             setApplication([...application, res.data])
         if(formState.roll === 'Instructor') {
             window.location.href = '/Instructor'
@@ -94,10 +95,12 @@ const SignUpForm = () => {
     }
     return (
         <div>
+            
             <Form onSubmit={formSubmit}>
-
+            <FormAlign>
             <label htmlFor="roll">
                 <SelectContainer>
+                    Select Role:
                     <Select
                     name="roll"
                     id="roll"
@@ -105,7 +108,6 @@ const SignUpForm = () => {
                     value={formState.roll}
                     onChange={inputChange}
                     >
-                            <option value="Select a Role">Select a Role</option>
                             <option value="Instructor">Instructor</option>
                             <option value="Client">Client</option>
                     </Select>
@@ -115,6 +117,7 @@ const SignUpForm = () => {
 
                 <label htmlFor="name">
                     <SelectContainer>
+                        Name:
                         <Input
                         type="text"
                         name="name"
@@ -129,8 +132,9 @@ const SignUpForm = () => {
 
                 <label htmlFor="email">
                     <SelectContainer>
+                        Email:
                         <Input
-                        type="text"
+                        type="email"
                         name="email"
                         id="email"
                         placeholder="Enter Email"
@@ -143,6 +147,7 @@ const SignUpForm = () => {
 
                 <label htmlFor="username">
                     <SelectContainer>
+                        Username
                         <Input
                         type="text"
                         name="username"
@@ -157,8 +162,9 @@ const SignUpForm = () => {
 
                 <label htmlFor="password">
                     <SelectContainer>
+                        Password:
                         <Input
-                        type="text"
+                        type="password"
                         name="password"
                         id="password"
                         placeholder="Enter Password"
@@ -167,8 +173,10 @@ const SignUpForm = () => {
                         />
                         {errorState.password ? <Error>{errorState.password}</Error> : null}
                 </SelectContainer>
-                </label>               
+                </label>       
+                </FormAlign>        
                 <Button disabled={isDisabled}>Submit</Button>
+                
             </Form>
             
         </div>
