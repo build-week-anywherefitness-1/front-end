@@ -186,7 +186,7 @@ const formSubmit = (e) => {
                         name="type"
                         id="type"
                         onChange={inputChange}>
-                            <option value="N/A">N/A</option>
+                            <option value="">N/A</option>
                             <option value="Cardio">Cardio</option>
                             <option value="Legs">Legs minutes</option>
                             <option value="Arms">Arms</option>
@@ -207,7 +207,7 @@ const formSubmit = (e) => {
                         name="Intensity"
                         id="Intensity"
                         onChange={inputChange}>
-                            <option value="N/A">N/A</option>
+                            <option value="">N/A</option>
                             <option value="easy">easy</option>
                             <option value="Medium">Medium</option>
                             <option value="Hard">Hard</option>
@@ -225,7 +225,7 @@ const formSubmit = (e) => {
                         name="Location"
                         id="Location"
                         onChange={inputChange}>
-                            <option value="N/A">N/A</option>
+                            <option value="">N/A</option>
                             <option value="indoor">Indoor</option>
                             <option value="Outdoor">Outdoor</option>
                            
