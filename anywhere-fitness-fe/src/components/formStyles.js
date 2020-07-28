@@ -1,6 +1,18 @@
 import styled from 'styled-components'
 
+export const FormAlign = styled.div`
+display:flex;
+flex-direction: column;
+justify-content: flex-end;
+align-items:flex-end;
+max-width: 400px;
 
+`
+export const SelectContainer = styled.div`
+display:flex;
+align-items: center;
+
+`
 export const Select = styled.select`
 margin: 20px;
 width 230px;
@@ -10,6 +22,7 @@ border-radius: 10px;
 &:focus {
     outline:0
 }
+
 
 `
 export const Input = styled.input`
@@ -57,22 +70,13 @@ transform: translateY(-7px);
 }
 `
 export const Form = styled.form`
+
 display:flex;
 flex-direction: column;
 justify-content: center;
 align-items:center;
 margin: 10px;
-`
 
-export const DatePickerStyle = styled.div`
-
-input {
-    margin: 20px;
-    width 230px;
-    border 2px solid black;
-    height: 30px;
-    border-radius: 10px;
-}
 `
 export const Error = styled.p`
 color: red;

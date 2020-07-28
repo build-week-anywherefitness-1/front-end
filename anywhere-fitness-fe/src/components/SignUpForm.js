@@ -5,7 +5,9 @@ import {
     Input,
     Select,
     Button,
-    Form
+    Form,
+    Error,
+    SelectContainer,
 } from './formStyles'
 
 const formSchema = yup.object().shape({
@@ -36,11 +38,11 @@ const SignUpForm = () => {
        
     })
     const [errorState, setErrorState] = useState({
-        name: "",
-        username: "",
-        email: "",
-        password: "",
-        roll: "please choose a roll"
+        name: "*",
+        username: "*",
+        email: "*",
+        password: "*",
+        roll: "*"
        
     })
 
@@ -71,6 +73,7 @@ const SignUpForm = () => {
         e.persist()
         validate(e)
         setFormState({...formState, [e.target.name]: e.target.value})
+        
     }
 
     const formSubmit = (e) => {
@@ -79,10 +82,13 @@ const SignUpForm = () => {
         
         axios.post('https://reqres.in/api/users', formState)
         .then( res => {
-            setApplication([...application, res.data])
-
-            window.location.href = '/Instructor'
             
+            setApplication([...application, res.data])
+        if(formState.roll === 'Instructor') {
+            window.location.href = '/Instructor'
+        }else{
+            window.location.href ='/Client'
+        }
         }
             )
     }
@@ -91,65 +97,76 @@ const SignUpForm = () => {
             <Form onSubmit={formSubmit}>
 
             <label htmlFor="roll">
-                <Select
-                name="roll"
-                id="roll"
-                placeholder="Enter Password"
-                value={formState.password}
-                onChange={inputChange}
-                >
-                        <option value="Select a Role">Select a Role</option>
-                        <option value="Instructor">Instructor</option>
-                        <option value="Client">Client</option>
-                </Select>
+                <SelectContainer>
+                    <Select
+                    name="roll"
+                    id="roll"
+                    placeholder="Enter Password"
+                    value={formState.roll}
+                    onChange={inputChange}
+                    >
+                            <option value="Select a Role">Select a Role</option>
+                            <option value="Instructor">Instructor</option>
+                            <option value="Client">Client</option>
+                    </Select>
+                {errorState.roll ? <Error>{errorState.roll}</Error> : null}
+                </SelectContainer>
                 </label>
 
                 <label htmlFor="name">
-                <Input
-                type="text"
-                name="name"
-                id="name"
-                placeholder="Enter Name"
-                value={formState.name}
-                onChange={inputChange}
-                />
-                {errorState.name ? <p>{errorState.name}</p> : null}
-                </label>
-
-                <label htmlFor="username">
-                <Input
-                type="text"
-                name="username"
-                id="username"
-                placeholder="Enter UserName"
-                value={formState.username}
-                onChange={inputChange}
-                />
-                {errorState.username ? <p>{errorState.username}</p> : null}
+                    <SelectContainer>
+                        <Input
+                        type="text"
+                        name="name"
+                        id="name"
+                        placeholder="Enter Name"
+                        value={formState.name}
+                        onChange={inputChange}
+                        />
+                        {errorState.name ? <Error>{errorState.name}</Error> : null}
+                    </SelectContainer>
                 </label>
 
                 <label htmlFor="email">
-                <Input
-                type="text"
-                name="email"
-                id="email"
-                placeholder="Enter Email"
-                value={formState.email}
-                onChange={inputChange}
-                />
-                {errorState.email ? <p>{errorState.email}</p> : null}
+                    <SelectContainer>
+                        <Input
+                        type="text"
+                        name="email"
+                        id="email"
+                        placeholder="Enter Email"
+                        value={formState.email}
+                        onChange={inputChange}
+                        />
+                        {errorState.email ? <Error>{errorState.email}</Error> : null}
+                </SelectContainer>
+                </label>
+
+                <label htmlFor="username">
+                    <SelectContainer>
+                        <Input
+                        type="text"
+                        name="username"
+                        id="username"
+                        placeholder="Enter UserName"
+                        value={formState.username}
+                        onChange={inputChange}
+                        />
+                        {errorState.username ? <Error>{errorState.username}</Error> : null}
+                    </SelectContainer>
                 </label>
 
                 <label htmlFor="password">
-                <Input
-                type="text"
-                name="password"
-                id="password"
-                placeholder="Enter Password"
-                value={formState.password}
-                onChange={inputChange}
-                />
-                {errorState.password ? <p>{errorState.password}</p> : null}
+                    <SelectContainer>
+                        <Input
+                        type="text"
+                        name="password"
+                        id="password"
+                        placeholder="Enter Password"
+                        value={formState.password}
+                        onChange={inputChange}
+                        />
+                        {errorState.password ? <Error>{errorState.password}</Error> : null}
+                </SelectContainer>
                 </label>               
                 <Button disabled={isDisabled}>Submit</Button>
             </Form>

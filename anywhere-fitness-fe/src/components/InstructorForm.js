@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios'
-import Order from './Order'
 import * as yup from 'yup'
 import {
     Input,
     Select,
     Button,
     Form,
-    DatePickerStyle,
-    Error
+    Error,
+    SelectContainer,
+    FormAlign
 } from './formStyles'
 
 const formSchema = yup.object().shape({
+    className: yup.string()
+    .min(5, "must include more than 5 characters")
+    .required("must include class name"),
     name: yup.string()
     .min(2, "must include atleast 2 characters")
     .required("Name is requried"),
-    startDate: yup.string()
+    date: yup.string()
     .required("must select a date"),
     duration: yup.string()
     .required("must select duration"),
@@ -38,8 +38,9 @@ const [application, setApplication] = useState([])
 const [isDisabled, setDisabled] = useState(true)
 
 const [formState, setFormState] = useState({
+    className: "",
     name: "",
-    startDate: "",
+    date: "",
     duration: "",
     type: "",
     Intensity: "",
@@ -49,14 +50,15 @@ const [formState, setFormState] = useState({
 })
 
 const [errorState, setErrorState] = useState({
-    name: "",
-    startDate: "",
-    duration: "",
-    type: "",
-    Intensity: "",
-    Location: "",
-    currentNumber: "",
-    maxMembers: "",
+    className: "*",
+    name: "*",
+    date: "*",
+    duration: "*",
+    type: "*",
+    Intensity: "*",
+    Location: "*",
+    currentNumber: "*",
+    maxMembers: "*",
 })
 
 const validate = (e) => {
@@ -87,11 +89,6 @@ const inputChange = e => {
     setFormState({...formState, [e.target.name]: e.target.value})
 }
 
-const datePickerChange = date => {
-    setFormState({...formState, startDate: date})
-}
-
-
 
 const formSubmit = (e) => {
     e.preventDefault()
@@ -113,8 +110,25 @@ const formSubmit = (e) => {
     return(
             <div>
             <Form onSubmit={formSubmit}>
-                
+                <FormAlign>
+
+                <label htmlFor="className">
+                        <SelectContainer>
+                        Class name:
+                        <Input
+                        type="text"
+                        name="className"
+                        id="className"
+                        placeholder="Create Class Name"
+                        value={formState.className}
+                        onChange={inputChange}
+                        />
+                        {errorState.className ? <Error>{errorState.className}</Error> : null}
+                        </SelectContainer>
+                    </label>
+
                     <label htmlFor="name">
+                        <SelectContainer>
                         NAME:
                         <Input
                         type="text"
@@ -125,26 +139,29 @@ const formSubmit = (e) => {
                         onChange={inputChange}
                         />
                         {errorState.name ? <Error>{errorState.name}</Error> : null}
+                        </SelectContainer>
                     </label>
                 
                 
                     <label htmlFor="date">
-                        <DatePickerStyle>
-                        YYYY-MM-DD:
-                        <DatePicker
-                        type="button"
+                        
+                        
+                        <SelectContainer>
+                        DATE:
+                        <Input
+                        type="text"
                         name="date"
                         id="date"
-                        showTimeSelect
-                        dateFormat="Pp"
-                        selected={formState.startDate}
-                        onChange={datePickerChange}
+                        placeholder="Enter Date"
+                        value={formState.date}
+                        onChange={inputChange}
                         />
                         {errorState.date ? <Error>{errorState.date}</Error> : null}
-                        </DatePickerStyle>
+                        </SelectContainer>
                     </label>
 
                     <label htmlFor="duration">
+                    <SelectContainer>
                         Duration:
                         <Select
                         value={formState.duration}
@@ -158,9 +175,11 @@ const formSubmit = (e) => {
                             <option value="2 hours">2 hours</option>
                         </Select>
                         {errorState.duration ? <Error>{errorState.duration}</Error> : null}
+                        </SelectContainer>
                     </label>
 
                     <label htmlFor="type">
+                        <SelectContainer>
                         TYPE:
                         <Select
                         value={formState.type}
@@ -177,9 +196,11 @@ const formSubmit = (e) => {
                             <option value="Turbo-Kick">Turbo-Kick</option>
                         </Select>
                         {errorState.type ? <Error>{errorState.type}</Error> : null}
+                        </SelectContainer>
                     </label>
 
                     <label htmlFor="Intensity">
+                        <SelectContainer>
                         Intensity:
                         <Select
                         value={formState.Intensity}
@@ -193,9 +214,11 @@ const formSubmit = (e) => {
                             <option value="Psycho Path">Psycho Path</option>         
                         </Select>
                         {errorState.Intensity ? <Error>{errorState.Intensity}</Error> : null}
+                        </SelectContainer>
                     </label>
 
                     <label htmlFor="Location">
+                        <SelectContainer>
                         Location:
                         <Select
                         value={formState.Location}
@@ -208,9 +231,11 @@ const formSubmit = (e) => {
                            
                         </Select>
                         {errorState.Location ? <Error>{errorState.Location}</Error> : null}
+                        </SelectContainer>
                     </label>
 
                     <label htmlFor="currentNumber">
+                        <SelectContainer>
                         Current members:
                         <Input
                         type="number"
@@ -221,9 +246,11 @@ const formSubmit = (e) => {
                         onChange={inputChange}
                         />
                         {errorState.currentNumber ? <Error>{errorState.currentNumber}</Error> : null}
+                        </SelectContainer>
                     </label>
 
                     <label htmlFor="maxMembers">
+                        <SelectContainer>
                         Maximum members:
                         <Input
                         type="number"
@@ -234,12 +261,11 @@ const formSubmit = (e) => {
                         onChange={inputChange}
                         />
                         {errorState.maxMembers ? <Error>{errorState.maxMembers}</Error> : null}
+                        </SelectContainer>
                     </label>
-                
+                    </FormAlign>
                 <Button disabled={false}>Submit</Button>
             </Form>
-           
-            {/* {application.map(item => <Order data={item} />)} */}
            
             </div>
     )
