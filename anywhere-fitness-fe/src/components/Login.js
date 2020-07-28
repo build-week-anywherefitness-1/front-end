@@ -101,7 +101,7 @@ function Form(props){
             <RoleSelect id ='roleInput' name='role' onChange={inputChange}>
                 <option>Select</option>
                 <option value='Instuctor'>Instructor</option>
-                <option value='Customer'>Customer</option>
+                <option value='Client'>Client</option>
             </RoleSelect>
             </label>
 
