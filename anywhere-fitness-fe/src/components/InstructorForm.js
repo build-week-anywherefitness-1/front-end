@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import * as yup from 'yup'
+import { ToastsContainer, ToastsStore } from 'react-toasts';
 import {
     Input,
     Select,
@@ -8,7 +9,8 @@ import {
     FormStyle,
     Error,
     SelectContainer,
-    FormAlign
+    FormAlign,
+    HeaderDiv,
 } from './formStyles'
 
 const formSchema = yup.object().shape({
@@ -83,6 +85,23 @@ const InstructorForm = () => {
         })
     }, [formState])
 
+//Look here for merge conflict <---
+const formSubmit = (e) => {
+    e.preventDefault()
+    formSchema.isValid(formState).then(valid => {
+        if(valid) {
+            axios.post('https://reqres.in/api/users', formState)
+            .then(res => console.log(res))
+        } else {
+            alert("you must fill out all fields")
+        }
+    }
+
+    ).catch(err => {
+        console.log(err)
+    })
+    console.log("form submitted")
+
     const inputChange = e => {
         e.persist()
         validate(e)
@@ -105,15 +124,30 @@ const InstructorForm = () => {
             console.log(err)
         })
         console.log("form submitted")
+      
+//Look here for merge conflict <---
+
+    return(
+            <div>
+           
+            <Form onSubmit={formSubmit}>
+                <FormAlign>
+                <HeaderDiv>
+                    <h2>Create Class</h2>
+                </HeaderDiv>
+                <label htmlFor="className">
 
     }
 
-    return (
-        <div>
-            <FormStyle onSubmit={formSubmit}>
-                <FormAlign>
+//     return (
+//         <div>
+//             <FormStyle onSubmit={formSubmit}>
+//                 <FormAlign>
 
-                    <label htmlFor="className">
+//                     <label htmlFor="className">
+      
+//Look here for merge conflict <---
+      
                         <SelectContainer>
                             Class name:
                         <Input
@@ -264,11 +298,20 @@ const InstructorForm = () => {
                             {errorState.maxMembers ? <Error>{errorState.maxMembers}</Error> : null}
                         </SelectContainer>
                     </label>
-                </FormAlign>
-                <Button disabled={false}>Submit</Button>
-            </FormStyle>
 
-        </div>
+                    </FormAlign>
+                <Button disabled={false} onClick={() => ToastsStore.success(`Welcome`)}>Submit</Button>
+                <ToastsContainer store={ToastsStore}/>
+            </Form>
+           
+            </div>
+
+//                 </FormAlign>
+//                 <Button disabled={false}>Submit</Button>
+//             </FormStyle>
+
+//         </div>
+
     )
 }
 

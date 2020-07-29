@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import * as yup from 'yup'
+import { ToastsContainer, ToastsStore } from 'react-toasts';
 import {
     Input,
     Select,
@@ -9,6 +10,7 @@ import {
     Error,
     SelectContainer,
     FormAlign,
+    HeaderDiv,
 } from './formStyles'
 
 const formSchema = yup.object().shape({
@@ -96,11 +98,23 @@ const SignUpForm = () => {
     return (
         <div>
 
-            <FormStyle onSubmit={formSubmit}>
-                <FormAlign>
-                    <label htmlFor="roll">
-                        <SelectContainer>
-                            Select Role:
+            
+            <Form onSubmit={formSubmit}>
+            <FormAlign>
+                <HeaderDiv>
+                    <h2>Sign Up</h2>
+                </HeaderDiv>
+            <label htmlFor="roll">
+                <SelectContainer>
+                    Select Role:
+
+//Look here for merge conflict <---
+//             <FormStyle onSubmit={formSubmit}>
+//                 <FormAlign>
+//                     <label htmlFor="roll">
+//                         <SelectContainer>
+//                             Select Role:
+
                     <Select
                                 name="roll"
                                 id="roll"
@@ -164,20 +178,39 @@ const SignUpForm = () => {
                         <SelectContainer>
                             Password:
                         <Input
-                                type="password"
-                                name="password"
-                                id="password"
-                                placeholder="Enter Password"
-                                value={formState.password}
-                                onChange={inputChange}
-                            />
-                            {errorState.password ? <Error>{errorState.password}</Error> : null}
-                        </SelectContainer>
-                    </label>
-                </FormAlign>
-                <Button disabled={isDisabled}>Submit</Button>
+      
+//Look here for merge conflict <---
+                        type="password"
+                        name="password"
+                        id="password"
+                        placeholder="Enter Password"
+                        value={formState.password}
+                        onChange={inputChange}
+                        />
+                        {errorState.password ? <Error>{errorState.password}</Error> : null}
+                </SelectContainer>
+                </label>       
+                </FormAlign>        
+                <Button disabled={isDisabled} onClick={() => ToastsStore.success("Sign Up successful")}>Submit</Button>
+                <ToastsContainer store={ToastsStore} />
+                
+            </Form>
 
-            </FormStyle>
+//                                 type="password"
+//                                 name="password"
+//                                 id="password"
+//                                 placeholder="Enter Password"
+//                                 value={formState.password}
+//                                 onChange={inputChange}
+//                             />
+//                             {errorState.password ? <Error>{errorState.password}</Error> : null}
+//                         </SelectContainer>
+//                     </label>
+//                 </FormAlign>
+//                 <Button disabled={isDisabled}>Submit</Button>
+
+//             </FormStyle>
+
 
         </div>
     )
