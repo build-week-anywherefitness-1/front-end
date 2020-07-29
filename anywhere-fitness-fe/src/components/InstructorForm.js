@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import * as yup from 'yup'
+import { ToastsContainer, ToastsStore } from 'react-toasts';
 import {
     Input,
     Select,
@@ -8,7 +9,8 @@ import {
     Form,
     Error,
     SelectContainer,
-    FormAlign
+    FormAlign,
+    HeaderDiv,
 } from './formStyles'
 
 const formSchema = yup.object().shape({
@@ -95,12 +97,13 @@ const formSubmit = (e) => {
     formSchema.isValid(formState).then(valid => {
         if(valid) {
             axios.post('https://reqres.in/api/users', formState)
+            .then(res => console.log(res))
         } else {
             alert("you must fill out all fields")
         }
     }
 
-    ).then(err => {
+    ).catch(err => {
         console.log(err)
     })
     console.log("form submitted")
@@ -109,9 +112,12 @@ const formSubmit = (e) => {
 
     return(
             <div>
+           
             <Form onSubmit={formSubmit}>
                 <FormAlign>
-
+                <HeaderDiv>
+                    <h2>Create Class</h2>
+                </HeaderDiv>
                 <label htmlFor="className">
                         <SelectContainer>
                         Class name:
@@ -264,7 +270,8 @@ const formSubmit = (e) => {
                         </SelectContainer>
                     </label>
                     </FormAlign>
-                <Button disabled={false}>Submit</Button>
+                <Button disabled={false} onClick={() => ToastsStore.success(`Welcome`)}>Submit</Button>
+                <ToastsContainer store={ToastsStore}/>
             </Form>
            
             </div>

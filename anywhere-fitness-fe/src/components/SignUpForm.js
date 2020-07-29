@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import * as yup from 'yup'
+import { ToastsContainer, ToastsStore } from 'react-toasts';
 import {
     Input,
     Select,
@@ -9,6 +10,7 @@ import {
     Error,
     SelectContainer,
     FormAlign,
+    HeaderDiv,
 } from './formStyles'
 
 const formSchema = yup.object().shape({
@@ -98,6 +100,9 @@ const SignUpForm = () => {
             
             <Form onSubmit={formSubmit}>
             <FormAlign>
+                <HeaderDiv>
+                    <h2>Sign Up</h2>
+                </HeaderDiv>
             <label htmlFor="roll">
                 <SelectContainer>
                     Select Role:
@@ -175,7 +180,8 @@ const SignUpForm = () => {
                 </SelectContainer>
                 </label>       
                 </FormAlign>        
-                <Button disabled={isDisabled}>Submit</Button>
+                <Button disabled={isDisabled} onClick={() => ToastsStore.success("Sign Up successful")}>Submit</Button>
+                <ToastsContainer store={ToastsStore} />
                 
             </Form>
             
