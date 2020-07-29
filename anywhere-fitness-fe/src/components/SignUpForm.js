@@ -6,7 +6,7 @@ import {
     Input,
     Select,
     Button,
-    FormStyle,
+    Form,
     Error,
     SelectContainer,
     FormAlign,
@@ -98,23 +98,14 @@ const SignUpForm = () => {
     return (
         <div>
 
-            
             <Form onSubmit={formSubmit}>
-            <FormAlign>
-                <HeaderDiv>
-                    <h2>Sign Up</h2>
-                </HeaderDiv>
-            <label htmlFor="roll">
-                <SelectContainer>
-                    Select Role:
-
-//Look here for merge conflict <---
-//             <FormStyle onSubmit={formSubmit}>
-//                 <FormAlign>
-//                     <label htmlFor="roll">
-//                         <SelectContainer>
-//                             Select Role:
-
+                <FormAlign>
+                    <HeaderDiv>
+                        <h2>Sign Up</h2>
+                    </HeaderDiv>
+                    <label htmlFor="roll">
+                        <SelectContainer>
+                            Select Role:
                     <Select
                                 name="roll"
                                 id="roll"
@@ -178,39 +169,21 @@ const SignUpForm = () => {
                         <SelectContainer>
                             Password:
                         <Input
-      
-//Look here for merge conflict <---
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder="Enter Password"
-                        value={formState.password}
-                        onChange={inputChange}
-                        />
-                        {errorState.password ? <Error>{errorState.password}</Error> : null}
-                </SelectContainer>
-                </label>       
-                </FormAlign>        
+                                type="password"
+                                name="password"
+                                id="password"
+                                placeholder="Enter Password"
+                                value={formState.password}
+                                onChange={inputChange}
+                            />
+                            {errorState.password ? <Error>{errorState.password}</Error> : null}
+                        </SelectContainer>
+                    </label>
+                </FormAlign>
                 <Button disabled={isDisabled} onClick={() => ToastsStore.success("Sign Up successful")}>Submit</Button>
                 <ToastsContainer store={ToastsStore} />
-                
+
             </Form>
-
-//                                 type="password"
-//                                 name="password"
-//                                 id="password"
-//                                 placeholder="Enter Password"
-//                                 value={formState.password}
-//                                 onChange={inputChange}
-//                             />
-//                             {errorState.password ? <Error>{errorState.password}</Error> : null}
-//                         </SelectContainer>
-//                     </label>
-//                 </FormAlign>
-//                 <Button disabled={isDisabled}>Submit</Button>
-
-//             </FormStyle>
-
 
         </div>
     )
