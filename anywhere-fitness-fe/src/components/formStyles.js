@@ -31,8 +31,8 @@ align-items: center;
 `
 export const Select = styled.select`
 margin: 20px;
-width 230px;
-border 2px solid black;
+width: 230px;
+border: 2px solid black;
 height: 30px;
 border-radius: 10px;
 &:focus {
@@ -43,8 +43,8 @@ border-radius: 10px;
 `
 export const Input = styled.input`
 margin: 20px;
-width 230px;
-border 2px solid black;
+width: 230px;
+border: 2px solid black;
 height: 30px;
 border-radius: 10px;
 padding: 5px 10px;
@@ -86,7 +86,7 @@ transform: translateY(-7px);
     outline:0
 }
 `
-export const Form = styled.form`
+export const FormStyle = styled.form`
 
 display:flex;
 flex-direction: column;
