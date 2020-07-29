@@ -1,24 +1,35 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom'
+import React from "react";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
-import SignUpForm from './components/SignUpForm'
-import ClassSelector from './components/ClassSelector'
-import InstructorForm from './components/InstructorForm'
-import Login from './components/Login'
-
-
+import SignUpForm from "./components/SignUpForm";
+import ClassSelector from "./components/ClassSelector";
+import InstructorForm from "./components/InstructorForm";
+import Login from "./components/Login";
+import InstructorDashboard from "./components/InstructorDashboard";
+import ClientDashboard from "./components/ClientDashboard";
 
 function App() {
   return (
-    <div>
-      <Switch>
+    <Router>
+      <div>
+        <nav>
+          <Link to="/">Home</Link>
+          <Link to="/login">Login</Link>
+          <Link to="register">Register</Link>
+        </nav>
 
-        <Route path='/' >
-          <Login />
-          <InstructorForm />
-        </Route>
-      </Switch>
-    </div>
+        <Switch>
+          <Route exact path="/instructor" component={InstructorDashboard} />
+          <Route exact path="/client" component={ClientDashboard} />
+          <Route exact path="/login">
+            <Login />
+          </Route>
+          <Route exact path="/register">
+            <SignUpForm />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
