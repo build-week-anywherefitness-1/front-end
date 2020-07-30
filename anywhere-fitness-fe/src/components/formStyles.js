@@ -121,3 +121,33 @@ a{
     color:  #5e6472
 }
 `
+
+export const CardDiv = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+width: 100%;
+margin: 10px;
+
+img{
+    border-radius:10px;
+    border-bottom: 6px solid #2EE59D;
+    border-right: 6px solid #2EE59D
+}
+`
+export const Card = styled.div`
+display: flex;
+flex-direction: column;
+align-items:center;
+line-height: 2px;
+background: linear-gradient(to right, #AED9E0, #B8F2E6);
+border-radius:10px;
+border-bottom: 1px solid #2EE59D;
+border-right: 1px solid #2EE59D;
+border-top: 1px solid #2EE59D;
+border-left: 1px solid #2EE59D;
+margin: 5px;
+width: 100%;
+
+`

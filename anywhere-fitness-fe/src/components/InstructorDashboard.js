@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axiosWithAuth from "../utils/axiosWithAuth";
 import ClassCard from "./ClassCard"
 import InstructorForm from './InstructorForm'
+import { HomeDiv } from './formStyles'
+import ClassSelector from './ClassSelector'
 
 const InstructorDashboard = () => {
     const [allClasses, setAllClasses] = useState([]);
@@ -20,17 +22,18 @@ const InstructorDashboard = () => {
     }, [refresh]);
 
     return (
-        <>
+        <HomeDiv>
             {/* <button>Create a Class</button> */}
+            <ClassSelector />
             <InstructorForm />
 
             <h1>My Classes</h1>
-            <div class="classList">
+            <>
                 {myClasses.map((item) => {
                     return <ClassCard key={item.id} details={item}></ClassCard>;
                 })}
-            </div>
-        </>
+            </>
+        </HomeDiv>
     );
 };
 export default InstructorDashboard;

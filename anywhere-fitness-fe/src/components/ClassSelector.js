@@ -19,7 +19,7 @@ export default function ClassSelector(props) {
             });
     }, []);
     return (
-        <div class="classList">
+        <div className="classList">
             {classes.map((item) => {
                 return <classCard key={item.id} details={item}></classCard>;
             })}
