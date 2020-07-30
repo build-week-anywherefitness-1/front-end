@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axiosWithAuth from "../utils/axiosWithAuth";
-import ClassCard from "./ClassCard"
+import ClassCard from "./classCard"
 import InstructorForm from './InstructorForm'
 import { HomeDiv } from './formStyles'
 import ClassSelector from './ClassSelector'

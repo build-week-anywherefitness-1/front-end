@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import ClassCard from "./ClassCard";
+import ClassCard from "./classCard";
 
 export default function ClassSelector(props) {
     const [classes, setClasses] = useState([]);
