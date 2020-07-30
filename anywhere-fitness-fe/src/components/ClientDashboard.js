@@ -22,7 +22,7 @@ const ClientDashboard = () => {
         <>
             <button>Create a Class</button>
             <h1>My Classes</h1>
-            <div class="classList">
+            <div className="classList">
                 {myClasses.map((item) => {
                     return <ClassCard key={item.id} details={item}></ClassCard>;
                 })}
