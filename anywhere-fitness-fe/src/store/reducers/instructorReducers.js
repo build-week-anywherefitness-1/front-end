@@ -20,8 +20,9 @@ export function instructorReducers(state = initialState, action) {
     switch (action.type) {
         case act.FETCH_INSTRUCTOR_START:
             return {
-                ...state,
-                isFetching: true
+                // ...state,
+                // state.classes
+                // isFetching: true
             }
         case act.FETCH_INSTRUCTOR_FINISH:
             return {

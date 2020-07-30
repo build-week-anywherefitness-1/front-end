@@ -22,13 +22,12 @@ max-width: 400px;
 border: 1px solid black;
 padding: 20px;
 border-radius: 10px;
-
 `
 export const SelectContainer = styled.div`
 display:flex;
 align-items: center;
-
 `
+
 export const Select = styled.select`
 margin: 20px;
 width: 230px;
@@ -38,9 +37,8 @@ border-radius: 10px;
 &:focus {
     outline:0
 }
-
-
 `
+
 export const Input = styled.input`
 margin: 20px;
 width: 230px;
@@ -48,7 +46,6 @@ border: 2px solid black;
 height: 30px;
 border-radius: 10px;
 padding: 5px 10px;
-
 &:focus {
     outline:0
 }
@@ -74,9 +71,8 @@ display:flex;
 align-items:center;
 justify-content: center;
 margin: 10px;
-
+​
 &:hover {
-
 background-color: #2EE59D;
 box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
 color: #fff;
@@ -86,15 +82,42 @@ transform: translateY(-7px);
     outline:0
 }
 `
-export const FormStyle = styled.form`
 
+export const Form = styled.form`
 display:flex;
 flex-direction: column;
 justify-content: center;
 align-items:center;
 margin: 10px;
-
 `
+
 export const Error = styled.p`
 color: red;
+`
+
+export const HomeDiv = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+margin: 10px;
+
+img{
+    border-radius:10px;
+    border-bottom: 6px solid #2EE59D;
+    border-right: 6px solid #2EE59D
+}
+`
+
+export const NavLinks = styled.div`
+display: flex;
+padding: 20px;
+justify-content: space-around;
+width: 75%;
+
+
+a{
+    text-decoration: none;
+    color:  #5e6472
+}
 `

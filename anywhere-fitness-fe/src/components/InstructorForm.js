@@ -6,13 +6,12 @@ import {
     Input,
     Select,
     Button,
-    FormStyle,
+    Form,
     Error,
     SelectContainer,
     FormAlign,
     HeaderDiv,
 } from './formStyles'
-
 const formSchema = yup.object().shape({
     className: yup.string()
         .min(5, "must include more than 5 characters")
@@ -38,7 +37,6 @@ const formSchema = yup.object().shape({
 const InstructorForm = () => {
     const [application, setApplication] = useState([])
     const [isDisabled, setDisabled] = useState(true)
-
     const [formState, setFormState] = useState({
         className: "",
         name: "",
@@ -50,7 +48,6 @@ const InstructorForm = () => {
         currentNumber: 0,
         maxMembers: 0,
     })
-
     const [errorState, setErrorState] = useState({
         className: "*",
         name: "*",
@@ -62,7 +59,6 @@ const InstructorForm = () => {
         currentNumber: "*",
         maxMembers: "*",
     })
-
     const validate = (e) => {
         yup.reach(formSchema, e.target.name).validate(e.target.value)
             .then(valid => {
@@ -78,76 +74,40 @@ const InstructorForm = () => {
                 })
             })
     }
-
     useEffect(() => {
         formSchema.isValid(formState).then(valid => {
             setDisabled(!valid);
         })
     }, [formState])
-
-//Look here for merge conflict <---
-const formSubmit = (e) => {
-    e.preventDefault()
-    formSchema.isValid(formState).then(valid => {
-        if(valid) {
-            axios.post('https://reqres.in/api/users', formState)
-            .then(res => console.log(res))
-        } else {
-            alert("you must fill out all fields")
-        }
-    }
-
-    ).catch(err => {
-        console.log(err)
-    })
-    console.log("form submitted")
-
     const inputChange = e => {
         e.persist()
         validate(e)
         setFormState({ ...formState, [e.target.name]: e.target.value })
-        console.log(formState)
     }
-
-
     const formSubmit = (e) => {
         e.preventDefault()
         formSchema.isValid(formState).then(valid => {
             if (valid) {
-                axios.post('https://reqres.in/api/instructor/classes', formState)
+                axios.post('https://reqres.in/api/users', formState)
+                    .then(res => console.log(res))
             } else {
                 alert("you must fill out all fields")
             }
         }
-
-        ).then(err => {
+        ).catch(err => {
             console.log(err)
         })
         console.log("form submitted")
-      
-//Look here for merge conflict <---
+    }
+    return (
+        <div>
 
-    return(
-            <div>
-           
             <Form onSubmit={formSubmit}>
                 <FormAlign>
-                <HeaderDiv>
-                    <h2>Create Class</h2>
-                </HeaderDiv>
-                <label htmlFor="className">
-
-    }
-
-//     return (
-//         <div>
-//             <FormStyle onSubmit={formSubmit}>
-//                 <FormAlign>
-
-//                     <label htmlFor="className">
-      
-//Look here for merge conflict <---
-      
+                    <HeaderDiv>
+                        <h2>Create Class</h2>
+                    </HeaderDiv>
+                    <label htmlFor="className">
                         <SelectContainer>
                             Class name:
                         <Input
@@ -161,7 +121,6 @@ const formSubmit = (e) => {
                             {errorState.className ? <Error>{errorState.className}</Error> : null}
                         </SelectContainer>
                     </label>
-
                     <label htmlFor="name">
                         <SelectContainer>
                             NAME:
@@ -194,7 +153,6 @@ const formSubmit = (e) => {
                             {errorState.date ? <Error>{errorState.date}</Error> : null}
                         </SelectContainer>
                     </label>
-
                     <label htmlFor="duration">
                         <SelectContainer>
                             Duration:
@@ -212,7 +170,6 @@ const formSubmit = (e) => {
                             {errorState.duration ? <Error>{errorState.duration}</Error> : null}
                         </SelectContainer>
                     </label>
-
                     <label htmlFor="type">
                         <SelectContainer>
                             TYPE:
@@ -233,7 +190,6 @@ const formSubmit = (e) => {
                             {errorState.type ? <Error>{errorState.type}</Error> : null}
                         </SelectContainer>
                     </label>
-
                     <label htmlFor="Intensity">
                         <SelectContainer>
                             Intensity:
@@ -251,7 +207,6 @@ const formSubmit = (e) => {
                             {errorState.Intensity ? <Error>{errorState.Intensity}</Error> : null}
                         </SelectContainer>
                     </label>
-
                     <label htmlFor="Location">
                         <SelectContainer>
                             Location:
@@ -268,7 +223,6 @@ const formSubmit = (e) => {
                             {errorState.Location ? <Error>{errorState.Location}</Error> : null}
                         </SelectContainer>
                     </label>
-
                     <label htmlFor="currentNumber">
                         <SelectContainer>
                             Current members:
@@ -283,7 +237,6 @@ const formSubmit = (e) => {
                             {errorState.currentNumber ? <Error>{errorState.currentNumber}</Error> : null}
                         </SelectContainer>
                     </label>
-
                     <label htmlFor="maxMembers">
                         <SelectContainer>
                             Maximum members:
@@ -298,23 +251,12 @@ const formSubmit = (e) => {
                             {errorState.maxMembers ? <Error>{errorState.maxMembers}</Error> : null}
                         </SelectContainer>
                     </label>
-
-                    </FormAlign>
+                </FormAlign>
                 <Button disabled={false} onClick={() => ToastsStore.success(`Welcome`)}>Submit</Button>
-                <ToastsContainer store={ToastsStore}/>
+                <ToastsContainer store={ToastsStore} />
             </Form>
-           
-            </div>
 
-//                 </FormAlign>
-//                 <Button disabled={false}>Submit</Button>
-//             </FormStyle>
-
-//         </div>
-
+        </div>
     )
 }
-
-
-
 export default InstructorForm;
