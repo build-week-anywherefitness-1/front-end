@@ -46,7 +46,7 @@ function ClassCard(props) {
   }
 
   const removeClass = e => {
-    axiosWithAuth().delete(`/client/${id}`)
+    axiosWithAuth().delete(`/client/classes/${id}`)
       .then((res) => { window.location.reload() })
       .catch(err => console.log(err))
   }
