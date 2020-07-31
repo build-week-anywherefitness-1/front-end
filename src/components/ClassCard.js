@@ -2,14 +2,18 @@ import React, { useState } from "react";
 import { Card2 } from './formStyles'
 import axiosWithAuth from '../utils/axiosWithAuth'
 import EditClasses from './EditClasses'
+import jwt_decode from "jwt-decode";
 
 import '../style.css'
 
 function ClassCard(props) {
+
   const { id } = props.details
   const [editing, setEditing] = useState(false)
   const [classToEdit, setClassToEdit] = useState(props)
-  console.log(props)
+  const token = localStorage.getItem('token')
+  const {role} = jwt_decode(token)
+console.log(role)
 
   const editClass = id => {
     setEditing(true)
@@ -63,12 +67,13 @@ function ClassCard(props) {
       <p>Current Attendees Number: {props.details.currentAttendeesNo}</p>
       <p>Max Size: {props.details.maxsize}</p>
 
-      <button onClick={e => { editClass() }}> Edit </button>
+
+      { role === 'instructor' &&< button onClick={e => { editClass() }}> Edit </button>}
       {editing && <EditClasses details={props.details} saveEdit={saveEdit} />}
       {/* <button onClick={e => { editClass(id) }}>Edit</button> */}
-      <button onClick={e => { deleteClass(id) }}>Delete</button>
-      <button onClick={e => { addClass(id) }}>Add Class</button>
-      <button onClick={e => { removeClass(id) }}>Remove Class</button>
+      { role === 'instructor' &&<button onClick={e => { deleteClass(id) }}>Delete</button>}
+      { role === 'client' &&<button onClick={e => { addClass(id) }}>Add Class</button>}
+      { role === 'client' &&<button onClick={e => { removeClass(id) }}>Remove Class</button>}
     </Card2>
   );
 }
