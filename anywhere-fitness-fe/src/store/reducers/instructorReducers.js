@@ -6,6 +6,7 @@ const initialState = {
         name: "",
         startDate: "",
         duration: "",
+        time: "",
         type: "",
         Intensity: "",
         Location: "",

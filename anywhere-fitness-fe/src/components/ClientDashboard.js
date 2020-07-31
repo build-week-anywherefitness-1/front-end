@@ -3,9 +3,10 @@ import axiosWithAuth from "../utils/axiosWithAuth";
 import ClassCard from "./ClassCard";
 
 const ClientDashboard = () => {
-    const [allClasses, setAllClasses] = useState([]);
+    // const [allClasses, setAllClasses] = useState([]);
     const [myClasses, setMyClasses] = useState([]);
-    const [refresh, setRefresh] = useState(false);
+    // const [refresh, setRefresh] = useState(false);
+    const refresh = false
     useEffect(() => {
         axiosWithAuth()
             .get("/client/classes")
