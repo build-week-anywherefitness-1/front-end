@@ -149,5 +149,44 @@ border-top: 1px solid #2EE59D;
 border-left: 1px solid #2EE59D;
 margin: 5px;
 width: 100%;
+`
 
+export const CardDiv2 = styled.div`
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: space-evenly;
+align-items: center;
+width: 100%;
+margin: 10px;
+
+img{
+    border-radius:10px;
+    border-bottom: 6px solid #2EE59D;
+    border-right: 6px solid #2EE59D
+}
+`
+
+export const Card2 = styled.div`
+display: flex;
+flex-direction: column;
+flex-wrap: wrap;
+align-items:center;
+text-align: center;
+line-height: 1em;
+background: linear-gradient(to right, #AED9E0, #B8F2E6);
+border-radius:10px;
+border-bottom: 1px solid #2EE59D;
+border-right: 1px solid #2EE59D;
+border-top: 1px solid #2EE59D;
+border-left: 1px solid #2EE59D;
+margin: 5px;
+width: auto;
+padding: 0 10px;
+p{
+    border-bottom: 1px solid black
+}
+button{
+    margin: 5px;
+}
 `

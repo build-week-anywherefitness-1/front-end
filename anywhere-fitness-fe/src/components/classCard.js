@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Card } from './formStyles'
+import React, { useState } from "react";
+import { Card2 } from './formStyles'
 import axiosWithAuth from '../utils/axiosWithAuth'
 import EditClasses from './EditClasses'
 
@@ -9,12 +9,10 @@ function ClassCard(props) {
   const { id } = props.details
   const [editing, setEditing] = useState(false)
   const [classToEdit, setClassToEdit] = useState(props)
+  console.log(props)
 
   const editClass = id => {
     setEditing(true)
-    // if (editing === true) {
-    //   style = 'display: inline'
-    // }
     setClassToEdit(id)
     axiosWithAuth(classToEdit)
       .get(`/instructor/classes/${id}`)
@@ -40,20 +38,21 @@ function ClassCard(props) {
       .then((res) => { window.location.reload() })
       .catch((err) => console.log(err))
   }
-  // const editInstructorForm = () => {
-  //   axiosWithAuth()
-  //     .get("/instructor/classes:id")
-  //     .then((res) => {
-  //       console.log(res.data.data);
-  //       setClassToEdit(res.data.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
 
-  // }
+  const addClass = e => {
+    axiosWithAuth().post(`/client/classes/${id}`)
+      .then((res) => { window.location.reload() })
+      .catch(err => console.log(err))
+  }
+
+  const removeClass = e => {
+    axiosWithAuth().delete(`/client/${id}`)
+      .then((res) => { window.location.reload() })
+      .catch(err => console.log(err))
+  }
+
   return (
-    <Card>
+    <Card2>
       <h3>Class Name: {props.details.classname}</h3>
       <p>Location: {props.details.location}</p>
       <p>Date: {props.details.date}</p>
@@ -64,16 +63,13 @@ function ClassCard(props) {
       <p>Current Attendees Number: {props.details.currentAttendeesNo}</p>
       <p>Max Size: {props.details.maxsize}</p>
 
-      <button
-        onClick={e => { editClass() }}
-      >
-        Edit
-      </button>
-
+      <button onClick={e => { editClass() }}> Edit </button>
       {editing && <EditClasses details={props.details} saveEdit={saveEdit} />}
       {/* <button onClick={e => { editClass(id) }}>Edit</button> */}
       <button onClick={e => { deleteClass(id) }}>Delete</button>
-    </Card>
+      <button onClick={e => { addClass(id) }}>Add Class</button>
+      <button onClick={e => { removeClass(id) }}>Remove Class</button>
+    </Card2>
   );
 }
 export default ClassCard;

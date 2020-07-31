@@ -38,6 +38,7 @@ function Login(props) {
             } else {
                 const token = localStorage.getItem("token");
                 const { userid, role } = jwt_decode(token);
+                console.log(userid)
                 if (role === "instructor") {
                     history.push("/instructor");
                 } else {
@@ -46,6 +47,7 @@ function Login(props) {
             }
         });
         setFormState(defaultState);
+
     };
 
     const validate = (e) => {
@@ -101,14 +103,14 @@ function Login(props) {
                 />
             </label>
 
-            <Button type="login">Log in</Button>
+            <Button disabled={buttonDisabled} type="login">Log in</Button>
         </Form>
     );
 }
 
 const mapStateToProps = (state) => {
     return {
-        classes: state.userReducer.classes,
+        classes: state.UserReducer.classes
     };
 };
 export default connect(mapStateToProps, { login })(Login);

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import * as yup from 'yup'
 import axiosWithAuth from '../utils/axiosWithAuth'
 import { ToastsContainer, ToastsStore } from 'react-toasts';
+import { connect } from 'react-redux';
 import {
     Input,
     Select,
@@ -35,7 +35,7 @@ const formSchema = yup.object().shape({
     maxsize: yup.number()
         .min(1, "number must be greater than 0").required(),
 })
-const CreateClass = () => {
+const CreateClass = (props) => {
     // const [application, setApplication] = useState([])
     const [isDisabled, setDisabled] = useState(true)
     const [formState, setFormState] = useState({
@@ -100,9 +100,8 @@ const CreateClass = () => {
         ).catch(err => {
             console.log(err)
         })
-        console.log("form submitted")
-    }
 
+    }
     return (
         <div>
             <Form onSubmit={formSubmit}>
@@ -261,10 +260,20 @@ const CreateClass = () => {
                     </label>
 
                 </FormAlign>
-                <Button disabled={false} onClick={() => ToastsStore.success(`Class Created`)}>Submit</Button>
+                <Button disabled={isDisabled} onClick={() => ToastsStore.success(`Class Created`)}>Submit</Button>
                 <ToastsContainer store={ToastsStore} />
             </Form>
         </div>
     )
 }
-export default CreateClass;
+
+const mapStateToProps = (state) => {
+
+    return {
+        formState: state.ClassesReducer.formState
+
+
+    }
+}
+
+export default connect(mapStateToProps, {})(CreateClass);

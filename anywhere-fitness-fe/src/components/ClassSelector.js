@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
 import ClassCard from "./ClassCard";
 import axiosWithAuth from "../utils/axiosWithAuth";
 
 
 const ClassSelector = (props) => {
-
-
     const [classes, setClasses] = useState([]);
-
-
-
     useEffect(() => {
         axiosWithAuth()
             .get("https://app-anywherefitness.herokuapp.com/api/client/classes/all")
