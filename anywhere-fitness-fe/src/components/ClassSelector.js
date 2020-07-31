@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import styled from "styled-components";
-import ClassCard from "./ClassCard";
 
-export default function ClassSelector(props) {
+import ClassCard from "./ClassCard";
+import axiosWithAuth from "../utils/axiosWithAuth";
+
+
+const ClassSelector = (props) => {
     const [classes, setClasses] = useState([]);
     useEffect(() => {
-        axios
+        axiosWithAuth()
             .get("https://app-anywherefitness.herokuapp.com/api/client/classes/all")
             .then((res) => {
                 console.log(res);
@@ -21,9 +22,10 @@ export default function ClassSelector(props) {
     return (
         <div className="classList">
             {classes.map((item) => {
-                return <classCard key={item.id} details={item}></classCard>;
+                return <ClassCard key={item.id} details={item}></ClassCard>;
             })}
         </div>
     );
 }
 
+export default ClassSelector

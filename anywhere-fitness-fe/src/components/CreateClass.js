@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import * as yup from 'yup'
+import axiosWithAuth from '../utils/axiosWithAuth'
 import { ToastsContainer, ToastsStore } from 'react-toasts';
+import { connect } from 'react-redux';
 import {
     Input,
     Select,
@@ -13,52 +14,53 @@ import {
     HeaderDiv,
 } from './formStyles'
 const formSchema = yup.object().shape({
-    className: yup.string()
+    classname: yup.string()
         .min(5, "must include more than 5 characters")
         .required("must include class name"),
-    name: yup.string()
-        .min(2, "must include atleast 2 characters")
-        .required("Name is requried"),
+    time: yup.string()
+        .min(1, "must include atleast 1 characters")
+        .required("Time is required"),
     date: yup.string()
         .required("must select a date"),
     duration: yup.string()
         .required("must select duration"),
-    type: yup.string()
+    classtype: yup.string()
         .required("must select a type"),
-    Intensity: yup.string()
+    intensityLevel: yup.string()
         .required("must select an intensity"),
-    Location: yup.string()
+    location: yup.string()
         .required("must select a location"),
-    currentNumber: yup.number()
+    currentAttendeesNo: yup.number()
         .min(1, "Number must be greater than 0").required(),
-    maxMembers: yup.number()
+    maxsize: yup.number()
         .min(1, "number must be greater than 0").required(),
 })
-const InstructorForm = () => {
-    const [application, setApplication] = useState([])
+const CreateClass = (props) => {
+    // const [application, setApplication] = useState([])
     const [isDisabled, setDisabled] = useState(true)
     const [formState, setFormState] = useState({
-        className: "",
-        name: "",
+        classname: "",
         date: "",
+        time: '',
         duration: "",
-        type: "",
-        Intensity: "",
-        Location: "",
-        currentNumber: 0,
-        maxMembers: 0,
+        classtype: "",
+        intensityLevel: "",
+        location: "",
+        currentAttendeesNo: 0,
+        maxsize: 0,
     })
     const [errorState, setErrorState] = useState({
-        className: "*",
-        name: "*",
+        classname: "*",
         date: "*",
+        time: '*',
         duration: "*",
-        type: "*",
-        Intensity: "*",
-        Location: "*",
-        currentNumber: "*",
-        maxMembers: "*",
+        classtype: "*",
+        intensityLevel: "*",
+        location: "*",
+        currentAttendeesNo: "*",
+        maxsize: "*",
     })
+
     const validate = (e) => {
         yup.reach(formSchema, e.target.name).validate(e.target.value)
             .then(valid => {
@@ -88,8 +90,9 @@ const InstructorForm = () => {
         e.preventDefault()
         formSchema.isValid(formState).then(valid => {
             if (valid) {
-                axios.post('https://reqres.in/api/users', formState)
+                axiosWithAuth().post('/instructor/classes', formState)
                     .then(res => console.log(res))
+                    .then(() => { window.location.reload() })
             } else {
                 alert("you must fill out all fields")
             }
@@ -97,51 +100,34 @@ const InstructorForm = () => {
         ).catch(err => {
             console.log(err)
         })
-        console.log("form submitted")
+
     }
     return (
         <div>
-
             <Form onSubmit={formSubmit}>
                 <FormAlign>
                     <HeaderDiv>
                         <h2>Create Class</h2>
                     </HeaderDiv>
-                    <label htmlFor="className">
+
+                    <label htmlFor="classname">
                         <SelectContainer>
                             Class name:
                         <Input
                                 type="text"
-                                name="className"
-                                id="className"
+                                name="classname"
+                                id="classname"
                                 placeholder="Create Class Name"
-                                value={formState.className}
+                                value={formState.classname}
                                 onChange={inputChange}
                             />
-                            {errorState.className ? <Error>{errorState.className}</Error> : null}
+                            {errorState.classname ? <Error>{errorState.classname}</Error> : null}
                         </SelectContainer>
                     </label>
-                    <label htmlFor="name">
-                        <SelectContainer>
-                            NAME:
-                        <Input
-                                type="text"
-                                name="name"
-                                id="name"
-                                placeholder="Enter Name"
-                                value={formState.name}
-                                onChange={inputChange}
-                            />
-                            {errorState.name ? <Error>{errorState.name}</Error> : null}
-                        </SelectContainer>
-                    </label>
-
 
                     <label htmlFor="date">
-
-
                         <SelectContainer>
-                            DATE:
+                            Date:
                         <Input
                                 type="text"
                                 name="date"
@@ -153,6 +139,22 @@ const InstructorForm = () => {
                             {errorState.date ? <Error>{errorState.date}</Error> : null}
                         </SelectContainer>
                     </label>
+
+                    <label htmlFor="time">
+                        <SelectContainer>
+                            Time:
+                        <Input
+                                type="text"
+                                name="time"
+                                id="time"
+                                placeholder="Enter Time"
+                                value={formState.time}
+                                onChange={inputChange}
+                            />
+                            {errorState.time ? <Error>{errorState.time}</Error> : null}
+                        </SelectContainer>
+                    </label>
+
                     <label htmlFor="duration">
                         <SelectContainer>
                             Duration:
@@ -162,21 +164,22 @@ const InstructorForm = () => {
                                 id="duration"
                                 onChange={inputChange}>
                                 <option value="">N/A</option>
-                                <option value="30">30 minutes</option>
-                                <option value="1 hour">1 hour</option>
-                                <option value="1 1/2 hours">1 1/5 hours</option>
-                                <option value="2 hours">2 hours</option>
+                                <option value=".5h">30 minutes</option>
+                                <option value="1h">1 hour</option>
+                                <option value="1.5h">1 1/5 hours</option>
+                                <option value="2h">2 hours</option>
                             </Select>
                             {errorState.duration ? <Error>{errorState.duration}</Error> : null}
                         </SelectContainer>
                     </label>
-                    <label htmlFor="type">
+
+                    <label htmlFor="classtype">
                         <SelectContainer>
-                            TYPE:
+                            Type:
                         <Select
-                                value={formState.type}
-                                name="type"
-                                id="type"
+                                value={formState.classtype}
+                                name="classtype"
+                                id="classtype"
                                 onChange={inputChange}>
                                 <option value="">N/A</option>
                                 <option value="Cardio">Cardio</option>
@@ -187,16 +190,17 @@ const InstructorForm = () => {
                                 <option value="Zumba">Zumba</option>
                                 <option value="Turbo-Kick">Turbo-Kick</option>
                             </Select>
-                            {errorState.type ? <Error>{errorState.type}</Error> : null}
+                            {errorState.type ? <Error>{errorState.classtype}</Error> : null}
                         </SelectContainer>
                     </label>
-                    <label htmlFor="Intensity">
+
+                    <label htmlFor="intensityLevel">
                         <SelectContainer>
                             Intensity:
                         <Select
-                                value={formState.Intensity}
-                                name="Intensity"
-                                id="Intensity"
+                                value={formState.intensityLevel}
+                                name="intensityLevel"
+                                id="intensityLevel"
                                 onChange={inputChange}>
                                 <option value="">N/A</option>
                                 <option value="easy">easy</option>
@@ -204,16 +208,17 @@ const InstructorForm = () => {
                                 <option value="Hard">Hard</option>
                                 <option value="Psycho Path">Psycho Path</option>
                             </Select>
-                            {errorState.Intensity ? <Error>{errorState.Intensity}</Error> : null}
+                            {errorState.intensityLevel ? <Error>{errorState.Intensity}</Error> : null}
                         </SelectContainer>
                     </label>
-                    <label htmlFor="Location">
+
+                    <label htmlFor="location">
                         <SelectContainer>
                             Location:
                         <Select
-                                value={formState.Location}
-                                name="Location"
-                                id="Location"
+                                value={formState.location}
+                                name="location"
+                                id="location"
                                 onChange={inputChange}>
                                 <option value="">N/A</option>
                                 <option value="indoor">Indoor</option>
@@ -223,40 +228,52 @@ const InstructorForm = () => {
                             {errorState.Location ? <Error>{errorState.Location}</Error> : null}
                         </SelectContainer>
                     </label>
-                    <label htmlFor="currentNumber">
+
+                    <label htmlFor="currentAttendeesNo">
                         <SelectContainer>
                             Current members:
                         <Input
                                 type="number"
-                                name="currentNumber"
-                                id="currentNumber"
+                                name="currentAttendeesNo"
+                                id="currentAttendeesNo"
                                 placeholder="0"
-                                value={formState.currentNumber}
+                                value={formState.currentAttendeesNo}
                                 onChange={inputChange}
                             />
-                            {errorState.currentNumber ? <Error>{errorState.currentNumber}</Error> : null}
+                            {errorState.currentAttendeesNo ? <Error>{errorState.currentAttendeesNo}</Error> : null}
                         </SelectContainer>
                     </label>
-                    <label htmlFor="maxMembers">
+
+                    <label htmlFor="maxsize">
                         <SelectContainer>
                             Maximum members:
                         <Input
                                 type="number"
-                                name="maxMembers"
-                                id="maxMembers"
+                                name="maxsize"
+                                id="maxsize"
                                 placeholder="0"
-                                value={formState.maxMembers}
+                                value={formState.maxsize}
                                 onChange={inputChange}
                             />
-                            {errorState.maxMembers ? <Error>{errorState.maxMembers}</Error> : null}
+                            {errorState.maxsize ? <Error>{errorState.maxsize}</Error> : null}
                         </SelectContainer>
                     </label>
+
                 </FormAlign>
-                <Button disabled={false} onClick={() => ToastsStore.success(`Welcome`)}>Submit</Button>
+                <Button disabled={isDisabled} onClick={() => ToastsStore.success(`Class Created`)}>Submit</Button>
                 <ToastsContainer store={ToastsStore} />
             </Form>
-
         </div>
     )
 }
-export default InstructorForm;
+
+const mapStateToProps = (state) => {
+
+    return {
+        formState: state.ClassesReducer.formState
+
+
+    }
+}
+
+export default connect(mapStateToProps, {})(CreateClass);

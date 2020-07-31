@@ -2,8 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import SignUpForm from "./components/SignUpForm";
 
-import ClassSelector from "./components/ClassSelector";
-import InstructorForm from "./components/InstructorForm";
+// import ClassSelector from "./components/ClassSelector";
+// import InstructorForm from "./components/InstructorForm";
 import Login from "./components/Login";
 import InstructorDashboard from "./components/InstructorDashboard.js";
 import ClientDashboard from "./components/ClientDashboard";
